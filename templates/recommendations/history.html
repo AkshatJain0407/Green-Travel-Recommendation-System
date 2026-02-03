@@ -1,0 +1,25 @@
+{% extends 'recommendations/base.html' %}
+
+{% block content %}
+  <section class="form-wrap">
+    <h2>Your recent travel recommendations</h2>
+    <div class="history-summary">
+      <strong>Total CO₂ saved (vs flight):</strong> {{ total_saved_kg }} kg
+      <br>
+      <strong>Total CO₂ estimated (all trips):</strong> {{ total_emitted_kg }} kg
+    </div>
+    {% if records %}
+      <ul class="results">
+        {% for r in records %}
+          <li>
+            <strong>{{ r.source }} → {{ r.destination }}</strong>
+            <div>{{ r.distance_km }} km — recommended: {{ r.recommended_transport }} — CO₂: {{ r.co2_estimated_kg }} kg</div>
+            <div class="muted">{{ r.created_at }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No history available. Use the finder to create and save recommendations.</p>
+    {% endif %}
+  </section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'recommendations/base.html' %}
+
+{% block content %}
+  <section class="form-wrap">
+    <h2>Logged out</h2>
+    <p>You have been logged out.</p>
+    <p><a href="{% url 'recommendations:index' %}">Return home</a></p>
+  </section>
+{% endblock %}

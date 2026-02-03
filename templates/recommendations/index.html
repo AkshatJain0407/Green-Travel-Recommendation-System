@@ -1,0 +1,137 @@
+﻿{% extends 'recommendations/base.html' %}
+
+{% block content %}
+
+  {% if user.is_authenticated %}
+  <section class="form-wrap">
+    <h2>Green Route Finder</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ travel_form.source }}
+      </div>
+      <div class="form-group">
+        {{ travel_form.destination }}
+      </div>
+      <div class="form-group">
+        {{ travel_form.travel_type }}
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="id_passenger_count">Number of passengers / travellers</label>
+          {{ travel_form.passenger_count }}
+          <small class="muted">Enter how many people will travel (for per-person cost/emissions)</small>
+        </div>
+      </div>
+
+      <button type="submit">Find Green Route</button>
+    </form>
+  </section>
+  {% else %}
+  <section class="form-wrap">
+    <h2>Green Route Finder</h2>
+    <p>Please <a href="{% url 'recommendations:login' %}">log in</a> or <a href="{% url 'recommendations:signup' %}">sign up</a> to calculate routes and see per-person estimates.</p>
+    <div style="margin-top:0.6rem">
+      <a class="btn-cta" href="{% url 'recommendations:login' %}">Log in</a>
+      <a class="btn-cta" href="{% url 'recommendations:signup' %}" style="margin-left:0.6rem">Sign up</a>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if api_error %}
+    <section class="form-wrap">
+      <h3>Error</h3>
+      <p>{{ api_error }}</p>
+    </section>
+  {% elif api_info and user.is_staff %}
+    <section class="form-wrap">
+      <h3>Info</h3>
+      <p>{{ api_info }}</p>
+    </section>
+  {% endif %}
+
+  {% if travel_result %}
+    <section class="form-wrap">
+      <h2>Recommendation</h2>
+      <p><strong>From:</strong> {{ travel_result.source }} to {{ travel_result.destination }}</p>
+      <div class="summary-grid">
+        <div><strong>Distance:</strong> {{ travel_result.distance_km }} km</div>
+        <div><strong>Passengers:</strong> {{ travel_result.passenger_count }}</div>
+        <div><strong>Estimated time:</strong> {{ travel_result.estimated_time }}</div>
+        <div><strong>Estimated cost:</strong> ₹ {{ travel_result.estimated_cost_inr }} (<small>₹{{ travel_result.cost_per_person_inr }} per person</small>)</div>
+        <div><strong>Recommended:</strong> {{ travel_result.recommended|title }}</div>
+      </div>
+      <div class="co2-time-cost-grid">
+        <div>
+          <strong>CO₂ Emissions</strong>
+          <div class="value">{{ travel_result.co2_estimated_kg }} kg</div>
+          <div class="label">Total ({{ travel_result.co2_per_person_kg }} kg/person)</div>
+        </div>
+        <div>
+          <strong>Estimated Time</strong>
+          <div class="value">{{ travel_result.estimated_time }}</div>
+          <div class="label">Journey duration</div>
+        </div>
+        <div>
+          <strong>Estimated Cost</strong>
+          <div class="value">₹ {{ travel_result.estimated_cost_inr }}</div>
+          <div class="label">₹{{ travel_result.cost_per_person_inr }}/person</div>
+        </div>
+      </div>
+      <p style="margin-top:.5rem"><strong>Green Score:</strong> {{ travel_result.green_score }}/100 | <strong>CO2 Saved vs Flight:</strong> {{ travel_result.co2_saved_kg }} kg</p>
+      <p><em>{{ travel_result.eco_message }}</em></p>
+
+      <h3>All Transport Options (Ranked by AI)</h3>
+      <ul class="options-list">
+        {% for option in travel_result.all_recommendations %}
+          <li class="option-card">
+            <div class="option-left">
+              {% if option.transport == 'train' %}
+                <i class="fas fa-train" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'bus' %}
+                <i class="fas fa-bus" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'car' %}
+                <i class="fas fa-car" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'ev' %}
+                <i class="fas fa-car-battery" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'flight' %}
+                <i class="fas fa-plane" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'bike' %}
+                <i class="fas fa-bicycle" style="margin-right: 0.5rem;"></i>
+              {% elif option.transport == 'walking' %}
+                <i class="fas fa-walking" style="margin-right: 0.5rem;"></i>
+              {% endif %}
+              <strong>{{ option.transport|title }}</strong>
+              <div class="muted">Score {{ option.green_score }}/100</div>
+            </div>
+            <div class="option-right">
+              <div>CO2: {{ option.emission_kg }} kg</div>
+              <div>Time: {{ option.duration_text }}</div>
+              <div>Cost: ₹ {{ option.cost_inr }}</div>
+            </div>
+            {% if option.transport == travel_result.recommended %}
+              <div class="badge">RECOMMENDED</div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <section class="results">
+    {% if recommendations %}
+      <h2>Featured Destinations</h2>
+      <ul>
+        {% for dest in recommendations %}
+          <li>
+            <h3>{{ dest.name }} - {{ dest.country }}</h3>
+            <p>{{ dest.description }}</p>
+            <p><strong>Carbon:</strong> {{ dest.carbon_score }} | <strong>Transports:</strong> {{ dest.transport_options }} | <strong>Tags:</strong> {{ dest.tags }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No featured destinations - use finder above!</p>
+    {% endif %}
+  </section>
+{% endblock %}

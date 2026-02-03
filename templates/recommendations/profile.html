@@ -1,0 +1,44 @@
+{% extends 'recommendations/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Your Profile</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+      {{ form.full_name.label_tag }}
+      {{ form.full_name }}
+    </div>
+    <div class="mb-3">
+      {{ form.phone.label_tag }}
+      {{ form.phone }}
+    </div>
+    <div class="mb-3">
+      {{ form.address.label_tag }}
+      {{ form.address }}
+    </div>
+    <div class="mb-3">
+      {{ form.city.label_tag }}
+      {{ form.city }}
+    </div>
+    <div class="mb-3">
+      {{ form.country.label_tag }}
+      {{ form.country }}
+    </div>
+    <div class="mb-3">
+      {{ form.birth_date.label_tag }}
+      {{ form.birth_date }}
+    </div>
+    <div class="mb-3">
+      {{ form.bio.label_tag }}
+      {{ form.bio }}
+    </div>
+    <div class="mb-3">
+      {{ form.preferred_contact.label_tag }}
+      {{ form.preferred_contact }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+{% endblock %}

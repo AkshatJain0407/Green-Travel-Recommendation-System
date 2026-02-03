@@ -1,0 +1,3 @@
+googlemaps>=4.7.0
+geopy>=2.3.0
+# Add other project dependencies here (e.g. Django==4.2)

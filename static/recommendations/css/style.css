@@ -1,0 +1,113 @@
+body {
+	font-family: 'Inter', Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1950&q=80');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	color: #102012;
+}
+
+
+/* Header with green background */
+header {
+	background: #2f7a36;
+	color: #ffffff;
+	padding: 1rem 0.6rem;
+	border-bottom: 1px solid #4caf50;
+}
+
+.header-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+header h1 { margin: 0; font-weight: 600; letter-spacing: -0.5px }
+
+nav a { color: #ffffff; margin-left: 1rem; text-decoration: none; font-weight:600 }
+nav a:hover { text-decoration: underline; color: #e0e0e0 }
+.muted { opacity: 0.8; margin-left: 0.5rem }
+.btn-cta { background: linear-gradient(90deg,#2f7a36,#4caf50); color: #fff; padding: 0.45rem 0.9rem; border-radius: 8px; font-weight:700 }
+
+/* Form styles */
+.form-wrap h2 { margin-top: 0 }
+form input[type="text"], form input[type="password"], form input[type="email"], form select {
+	width: 100%;
+	padding: 0.5rem;
+	margin: 0.35rem 0 0.8rem 0;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+}
+form label { font-weight:600 }
+
+.results h2 { margin-top: 0 }
+
+.hero { max-width: 900px; margin: 0 auto 1rem; padding: 1.2rem; color: white; text-align: center }
+.hero .lead { opacity: 0.95; margin-top: 0.3rem }
+
+/* Hero styles removed as per request */
+
+/* Make buttons nicer */
+button { background: #2f7a36; color: white; border: none; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer }
+button:hover { opacity: 0.95 }
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+	.header-inner { padding: 0 0.5rem }
+	main { margin: 1rem; border-radius: 8px }
+}
+
+.messages { max-width: 900px; margin: 1rem auto 0; padding: 0 1rem }
+.message { padding: 0.6rem 0.8rem; border-radius: 6px; margin-bottom: 0.6rem }
+.message.error { background: #ffe6e6; color: #6b0b0b }
+.message.success { background: #e9f8ee; color: #0b5d20 }
+.success { background: rgba(46,125,50,0.08); padding: 0.6rem; border-radius: 6px; color: #0b5d20 }
+
+/* Main content with translucent background */
+main {
+	padding: 2.2rem 1.2rem;
+	max-width: 1100px;
+	margin: 2.5rem auto;
+	background: rgba(255, 255, 255, 0.8);
+	color: #102012;
+	border-radius: 12px;
+	box-shadow: 0 10px 40px rgba(16,32,20,0.08);
+}
+
+.form-wrap { background: #f8fff8; padding: 1.1rem; border-radius: 10px; box-shadow: 0 6px 20px rgba(16,32,20,0.04); }
+.results ul { list-style: none; padding: 0; }
+.results li { background: white; margin: 0.5rem 0; padding: 0.8rem; border-radius: 6px; }
+button { background: linear-gradient(90deg,#2f7a36,#4caf50); color: white; border: none; padding: 0.6rem 1.1rem; border-radius: 8px; cursor: pointer; font-weight:700 }
+
+footer { text-align:center; padding: 1rem; color: #fff }
+
+/* Recommendation summary grid */
+.summary-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.6rem; background: #ffffff; padding: 0.9rem; border-radius: 8px; color: #102012; border:1px solid #eef7ee }
+
+/* Options list cards */
+.options-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-around; }
+.option-card { display:flex; justify-content:space-between; align-items:center; background: linear-gradient(180deg,#ffffff,#f7fff8); border-radius:10px; padding: 0.9rem; flex: 1 1 calc(50% - 0.5rem); min-width: 300px; box-shadow: 0 8px 26px rgba(9,30,12,0.04); }
+.option-left { display:flex; flex-direction:column; }
+.option-right { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; min-width: 200px; text-align: center; }
+.option-right div { margin: 0.12rem 0; }
+.badge { display:inline-block; background: linear-gradient(90deg,#ffefc0,#ffd48a); color:#8a6d00; padding:0.28rem 0.6rem; border-radius:6px; font-weight:800; margin-top:0.25rem }
+
+/* CO2 Time Cost Grid - 3 equal columns side by side */
+.co2-time-cost-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; background: #ffffff; padding: 1rem; border-radius: 8px; color: #102012; border: 1px solid #eef7ee; margin: 1rem 0; }
+.co2-time-cost-grid > div { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem; text-align: center; }
+.co2-time-cost-grid > div strong { font-size: 1rem; color: #2f7a36; margin-bottom: 0.3rem; }
+.co2-time-cost-grid > div .value { font-size: 1.4rem; font-weight: 700; color: #102012; }
+.co2-time-cost-grid > div .label { font-size: 0.85rem; color: #666; margin-top: 0.2rem; }
+
+/* Improve form visuals */
+.form-wrap h2 { font-size:1.2rem; }
+form .form-group { margin-bottom:0.6rem }
+form input, form select { border:1px solid #dfece2 }
+form input[type="number"] { width:220px; padding:0.55rem; font-size:1rem; border-radius:6px }
+.form-note { margin:0.5rem 0; color:#6b7a6b }
+.btn-disabled { background: #c6dac6; color:#7a8b7a; border:none; padding:0.6rem 1.1rem; border-radius:8px }
+label { font-weight:700 }

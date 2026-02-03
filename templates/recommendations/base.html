@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Green Travel Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/recommendations/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <h1>Green Travel</h1>
+        <nav>
+          <a href="{% url 'recommendations:index' %}">Home</a>
+          <a href="{% url 'recommendations:about' %}">About</a>
+          <a href="{% url 'recommendations:history' %}">History</a>
+          {% if user.is_authenticated %}
+              <a class="muted" href="{% url 'recommendations:profile' %}"><i class="fas fa-user-circle"></i> {{ user.username }}</a>
+              <a href="{% url 'recommendations:logout' %}">Logout</a>
+          {% else %}
+              <!-- Login/Signup are intentionally shown on the main page only -->
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+    <main>
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <small>Built with Django — sample app</small>
+    </footer>
+  </body>
+</html>

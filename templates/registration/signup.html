@@ -1,0 +1,13 @@
+{% extends 'recommendations/base.html' %}
+
+{% block content %}
+  <section class="form-wrap">
+    <h2>Create an account</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Create account</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'recommendations:login' %}">Log in</a></p>
+  </section>
+{% endblock %}
